@@ -1,4 +1,4 @@
- b<?php
+<?php
 
 $server = "localhost";
 $username = "root";
@@ -13,10 +13,10 @@ switch ($operasi) {
 
 	case "lihat":
 
-	$query_tampil_buku = mysqli_query($con,"SELECT * FROM buku") or die (mysqli_error($con));
+	$query_tampil_user = mysqli_query($con,"SELECT * FROM user") or die (mysqli_error($con));
 	$data_array = array();
 
-	while ($data = mysqli_fetch_assoc($query_tampil_buku)) {
+	while ($data = mysqli_fetch_assoc($query_tampil_user)) {
 		$data_array[]=$data;
 	}
 	echo json_encode($data_array);
@@ -45,30 +45,28 @@ switch ($operasi) {
 
 	break;
 
-	case "get_buku_by_id":
+	case "get_user_by_id":
 	@$id =(int)$_GET['id'];
-	$query_tampil_buku = mysqli_query($con, "SELECT * FROM buku WHERE id='$id'") or die (mysqli_error($con));
+	$query_tampil_user = mysqli_query($con, "SELECT * FROM user WHERE id='$id'") or die (mysqli_error($con));
 	$data_array = array();
-	$data_array = mysqli_fetch_assoc($query_tampil_buku);
+	$data_array = mysqli_fetch_assoc($query_tampil_user);
 	echo "[" .json_encode ($data_array) . "]";
 	break;
 
 	case "edit_data";
 	@$id = $_GET['id'];
-	@$judul_buku = $_GET['judul_buku'];
-	@$id_kategori = $_GET['id_kategori'];
-	@$pengarang = $_GET['pengarang'];
-	@$penerbit = $_GET['penerbit'];
-	@$tahun_terbit = $_GET['tahun_terbit'];
-	@$isbn = $_GET['isbn'];
-	@$stok = $_GET['stok'];
-	@$dipinjam = $_GET['dipinjam'];
-	@$dibooking = $_GET['dibooking'];
+	@$nama = $_GET['nama'];
+	@$alamat = $_GET['alamat'];
+	@$email = $_GET['email'];
 	@$image = $_GET['image'];
+	@$password = $_GET['password'];
+	@$role_id = $_GET['role_id'];
+	@$is_active = $_GET['is_active'];
+	@$tanggal_input = $_GET['tanggal_input'];
 
-	$query_update_buku = mysqli_query($con, "UPDATE buku SET id='$id', judul_buku='$judul_buku', id_kategori='$id_kategori', pengarang='$pengarang', penerbit='$penerbit', tahun_terbit='$tahun_terbit', isbn='$isbn', stok='$stok', dipinjam='$dipinjam', dibooking='$dibooking', image='$image' WHERE id='$id'");
+	$query_update_user = mysqli_query($con, "UPDATE user SET id='$id', nama='$nama', alamat='$alamat', email='$email', image='$image', password='$password', role_id='$role_id', is_active='$is_active', tanggal_input='$tanggal_input' WHERE id='$id'");
 
-	if ($query_update_buku) {
+	if ($query_update_user) {
 			echo " Update Data Berhasil YEAAAAYY";
 	}
 	else {
@@ -78,9 +76,9 @@ switch ($operasi) {
 
 	case "hapus";
 	@$id = $_GET['id'];
-	$query_delete_buku = mysqli_query($con, "DELETE FROM buku WHERE id='$id'");
+	$query_delete_user = mysqli_query($con, "DELETE FROM user WHERE id='$id'");
 
-	if ($query_delete_buku) {
+	if ($query_delete_user) {
 		echo "Data Berhasil Dihapus :((";
 	}
 	else {
